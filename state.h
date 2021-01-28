@@ -2,16 +2,15 @@
 #define STATE_H
 
 #include "at.h"
-#include "mcp_can_dfs.h"
-#include "mcp_can.h"
+#include "can.h"
+#include "config.h"
 
 struct State
 {
 	AtState at;
-	MCP_CAN* can;
+	CanState can;
 
-	int baudrate = 9600;
-	int canSpeed = CAN_500KBPS;
+	int baudrate = UART_DEFAULT_SPEED;
 };
 
 #endif

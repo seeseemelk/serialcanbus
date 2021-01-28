@@ -3,6 +3,6 @@
 
 #include "at.h"
 
-extern AtCommand g_callbacks[];
+extern const AtCommand g_callbacks[];
 
 #endif

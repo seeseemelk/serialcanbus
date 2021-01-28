@@ -1,0 +1,12 @@
+#ifndef ERRORS_H
+#define ERRORS_H
+
+#define ERR_UNKNOWN_COMMAND 1
+#define ERR_INVALID_PARAMETER 2
+#define ERR_INVALID_BAUD_RATE 3
+#define ERR_INVALID_SPEED 4
+#define ERR_INVALID_ADDRESS 5
+#define ERR_INVALID_VALUE 6
+#define ERR_NO_DATA 7
+
+#endif

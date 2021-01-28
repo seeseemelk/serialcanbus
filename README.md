@@ -24,17 +24,17 @@ VERSION?
 
 Response:
 ```
-VERSION=<version>
+<version>
 ```
 
 | Field | Description |
 |---|---|
-| `version` | A string describing the firmware version |
+| `version` | A number describing the firmware version |
 
 Example:
 ```
 VERSION?
-VERSION=0.1.0
+VERSION=001
 OK
 ```
 ---------------------------------------------------------------------
@@ -43,7 +43,7 @@ Enables or disables the echo.
 
 Command:
 ```
-ECHO=<state>
+ECHO=<sate>
 ```
 
 | Parameter | Description |
@@ -60,7 +60,7 @@ ECHO?
 
 Response:
 ```
-ECHO=<state>
+<state>
 ```
 
 | Field | Description |
@@ -91,7 +91,7 @@ BAUD?
 
 Response:
 ```
-BAUD=<baud>
+<baud>
 ```
 
 | Field | Description |
@@ -122,7 +122,7 @@ SPEED?
 
 Response:
 ```
-SPEED=<speed>
+<speed>
 ```
 
 | Field | Description |
@@ -144,7 +144,7 @@ READREG=<address>
 
 Response:
 ```
-READREG=<value>
+<value>
 ```
 
 | Field | Description |
@@ -154,8 +154,79 @@ READREG=<value>
 Example:
 ```
 READREG=29
-REG=f0
+f0
 OK
 ```
 
 ---------------------------------------------------------------------
+### `WRITEREG=`
+Writes to a register of the MCP2515.
+
+Command:
+```
+WRITEREG=<address>,<value>
+```
+
+| Parameter | Description |
+|---|---|
+| `address` | A hexadecimal value between `0` and `FF`. To the register at this address will the data be written. |
+| `value` | A hexadecimal value between `0` and `FF`. The value that will be written to the register. |
+
+---------------------------------------------------------------------
+### `READ`
+Reads the next frame in the buffer.
+
+Command:
+```
+READ
+```
+
+Response:
+```
+<id>,<length>,<data>
+```
+
+| Field | Description |
+|---|---|
+| `id` | The ID to which the message was sent. |
+| `length` | The number of bytes of data that were received. |
+| `data` | The data that was encoded within the can message. It is encoded in hexadecimal, and contains between 0 to 8 bytes of data. |
+
+Example:
+```
+READ
+120,3,414243
+OK
+```
+
+---------------------------------------------------------------------
+### `READ?`
+Gets the number of frames currently in the buffer.
+
+Command:
+```
+READ?
+```
+
+Response:
+```
+<count>
+```
+
+| Parameter | Description |
+|---|---|
+| `count` | The number of packets currently stored in a buffer. |
+
+---------------------------------------------------------------------
+
+## Errors
+The following error codes can be returned by the firmware:
+| Error Code | Description |
+|---|---|
+| 1 | An unknown command was executed. |
+| 2 | A parameter was given an invalid value. |
+| 3 | The baud rate specified is invalid or not supported. |
+| 4 | The CAN bus speed specified is invalid or not supported. |
+| 5 | The register address to read from is invalid. |
+| 6 | The value to write to the register is invalid. |
+| 7 | No CAN frames available for reading. |

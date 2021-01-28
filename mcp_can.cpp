@@ -902,14 +902,14 @@ byte MCP_CAN::readMsgBuf(byte *len, byte buf[])
 ** Function name:           readMsgBufID
 ** Descriptions:            read message buf and can bus source ID
 *********************************************************************************************************/
-byte MCP_CAN::readMsgBufID(unsigned long *ID, byte *len, byte buf[])
+byte MCP_CAN::readMsgBufID(unsigned long *id, byte *len, byte buf[])
 {
     byte rc;
     rc = readMsg();
 
     if(rc == CAN_OK) {
         *len = dta_len;
-        *ID  = can_id;
+        *id  = can_id;
         for(int i = 0; i<dta_len && i < MAX_CHAR_IN_MESSAGE; i++)
         {
             buf[i] = dta[i];

@@ -1,6 +1,13 @@
 #include "at.h"
+#include "board.h"
+#include "errors.h"
 
 #include <Arduino.h>
+
+/// Ugly, will move this into AtState later.
+static bool g_urc = true;
+
+char g_output[OUTPUT_SIZE];
 
 static bool isCorrectCommand(const char* command, const char* input)
 {
@@ -29,13 +36,13 @@ static void atExecute(AtState& state)
 		}
 		command++;
 	}
-	atError("UNKNOWN COMMAND");
+	atError(ERR_UNKNOWN_COMMAND);
 }
 
-void atError(const char* message)
+void atError(int code)
 {
 	Serial.print("ERROR: ");
-	Serial.print(message);
+	Serial.print(code);
 	Serial.print("\n");
 }
 
@@ -50,6 +57,16 @@ void atOk()
 	Serial.print("OK\n");
 }
 
+void atUrc(const char* line)
+{
+	if (g_urc)
+	{
+		Serial.write("+");
+		Serial.write(line);
+		Serial.write("\n");
+	}
+}
+
 void atSetCallback(AtState& state, AtCommand* callbacks, void* arg)
 {
 	state.callbacks = callbacks;
@@ -59,16 +76,20 @@ void atSetCallback(AtState& state, AtCommand* callbacks, void* arg)
 void atReadCommand(AtState& state)
 {
 	int data = Serial.read();
-	if (data == -1)
+	if (data == -1 || data == '\r')
 		return;
 
+	ledOff();
 	if (state.echo)
 	{
 		Serial.write(data);
 	}
+	ledOn();
 
 	if (data == '\n')
 	{
+		if (state.readBufferLength == 0)
+			return;
 		if (state.readBufferLength < AT_READBUFFER_SIZE)
 		{
 			state.readBuffer[state.readBufferLength] = '\0';
