@@ -13,6 +13,7 @@ The final response line of a command is always `OK` if the command succeeded, or
 
 The following commands are available:
 
+---------------------------------------------------------------------
 ### `VERSION?`
 Prints the version of the firmware.
 
@@ -36,7 +37,7 @@ VERSION?
 VERSION=0.1.0
 OK
 ```
-
+---------------------------------------------------------------------
 ### `ECHO=`
 Enables or disables the echo.
 
@@ -48,6 +49,7 @@ ECHO=<state>
 | Parameter | Description |
 | `state` | `0` when echo should be disabled, `1` when echo should be enabled. |
 
+---------------------------------------------------------------------
 ### `ECHO?`
 Gets whether commands are echoed or not.
 
@@ -65,6 +67,7 @@ ECHO=<state>
 |---|---|
 | `state` | Is `1` if commands are echoed, `0` if commands are not echoed. |
 
+---------------------------------------------------------------------
 ### `BAUD=`
 Sets the baud rate of the serial port.
 
@@ -77,6 +80,7 @@ BAUD=<baud>
 |---|---|
 | `baud` | The desired baud rate. Possible values are: `9600`, `115200`. |
 
+---------------------------------------------------------------------
 ### `BAUD?`
 Gets the current baud rate of the serial port.
 
@@ -94,6 +98,7 @@ BAUD=<baud>
 |---|---|
 | `baud` | The current baud rate of the serial port. |
 
+---------------------------------------------------------------------
 ### `SPEED=`
 Sets the speed of the CAN bus.
 
@@ -106,6 +111,7 @@ SPEED=<speed>
 |---|---|
 | `speed` | The speed of the CAN bus in kilobits per second. Possible values are: `5`, `10`, `20`, `25`, `31`, `33`, `40`, `50`, `80`, `83`, `95`, `100`, `125`, `200`, `250`, `500`, `666`, `1000` |
 
+---------------------------------------------------------------------
 ### `SPEED?`
 Gets the current speed of the CAN bus.
 
@@ -123,6 +129,7 @@ SPEED=<speed>
 |---|---|
 | `speed` | The speed of the CAN bus. |
 
+---------------------------------------------------------------------
 ### `READREG=`
 Reads a register from the MCP2515.
 
@@ -150,3 +157,5 @@ READREG=29
 REG=f0
 OK
 ```
+
+---------------------------------------------------------------------
