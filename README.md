@@ -213,9 +213,30 @@ Response:
 <count>
 ```
 
-| Parameter | Description |
+| Field | Description |
 |---|---|
 | `count` | The number of packets currently stored in a buffer. |
+
+---------------------------------------------------------------------
+### `WRITE=`
+Sends a CAN message.
+
+Command:
+```
+WRITE=<id>,<length>,<data>
+```
+
+| Parameter | Description |
+|---|---|
+| `id` | The ID of the CAN message. |
+| `length` | The number of bytes to send. |
+| `data` | The data to send. This should be encoded in hexadecimal. |
+
+Example:
+```
+WRITE=121,2,410a
+OK
+```
 
 ---------------------------------------------------------------------
 

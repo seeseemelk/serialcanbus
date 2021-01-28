@@ -168,6 +168,34 @@ static void cmdReadGet(State* state, const char* command)
 	atOk();
 }
 
+static void cmdWrite(State* state, const char* command)
+{
+	unsigned long id;
+	int length;
+	byte data[8];
+
+	int end = 0;
+	sscanf(command, "WRITE=%lu,%d,%n", &id, &length, &end);
+
+	if (end == 0)
+	{
+		atError(ERR_INVALID_PARAMETER);
+		return;
+	}
+
+	for (size_t i = 0; i < length; i++)
+	{
+		int value;
+		sscanf(command + end, "%02x", &value);
+		data[i] = value;
+		end += 2;
+	}
+
+	state->can.dev->sendMsgBuf(id, 0, length, data);
+
+	atOk();
+}
+
 #define COMMAND(NAME, CALLBACK) {.name=NAME, .callback=(AtCallback*) &CALLBACK}
 const AtCommand g_callbacks[] =
 {
@@ -182,5 +210,6 @@ const AtCommand g_callbacks[] =
 	COMMAND("WRITEREG=", cmdWriteRegister),
 	COMMAND("READ", cmdRead),
 	COMMAND("READ?", cmdReadGet),
+	COMMAND("WRITE=", cmdWrite),
 	{NULL, NULL}
 };
