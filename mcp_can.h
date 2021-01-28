@@ -52,7 +52,7 @@
 
 class MCP_CAN
 {
-    private:
+private:
 
     byte   ext_flg;                         // identifier xxxID
                                             // either extended (the 29 LSB) or standard (the 11 LSB)
@@ -67,7 +67,7 @@ class MCP_CAN
 *  mcp2515 driver function
 */
 
-private:
+public:
 
     void mcp2515_reset(void);                                   // reset mcp2515
 
@@ -107,17 +107,6 @@ private:
     void mcp2515_start_transmit(const byte mcp_addr);           // start transmit
     byte mcp2515_getNextFreeTXBuf(byte *txbuf_n);               // get Next free txbuf
 
-/*
-*  can operator function
-*/
-
-    byte setMsg(unsigned long id, byte ext, byte len, byte rtr, byte *pData);   // set message
-    byte setMsg(unsigned long id, byte ext, byte len, byte *pData);             //  set message
-    byte clearMsg();                                                // clear all message to zero
-    byte readMsg();                                                 // read message
-    byte sendMsg(int rtrBit);                                                 // send message
-
-public:
     MCP_CAN(byte _CS);
     byte begin(byte speedset);                                      // init can
     byte init_Mask(byte num, byte ext, unsigned long ulData);       // init Masks
@@ -131,6 +120,16 @@ public:
     unsigned long getCanId(void);                                   // get can id when receive
     byte isRemoteRequest(void);                                     // get RR flag when receive
     byte isExtendedFrame(void);                                     // did we recieve 29bit frame?
+
+/*
+*  can operator function
+*/
+private:
+    byte setMsg(unsigned long id, byte ext, byte len, byte rtr, byte *pData);   // set message
+    byte setMsg(unsigned long id, byte ext, byte len, byte *pData);             //  set message
+    byte clearMsg();                                                // clear all message to zero
+    byte readMsg();                                                 // read message
+    byte sendMsg(int rtrBit);                                                 // send message
 };
 
 #endif
