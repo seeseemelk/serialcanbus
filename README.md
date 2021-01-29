@@ -9,7 +9,7 @@ The UART is configured to run at 9600 baud by default, but this can be changed u
 Any of the commands in the table below can be sent.
 Each command must be terminated by a `\n` character.
 The response of a command may consist of one or more lines, each terminated by a `\n`.
-The final response line of a command is always `OK` if the command succeeded, or `ERROR: <a description>` when an error occured.
+The final response line of a command is always `OK` if the command succeeded, or `ERROR: <code>` when an error occured.
 
 The following commands are available:
 
